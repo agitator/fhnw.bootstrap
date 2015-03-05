@@ -46,9 +46,13 @@
         <!-- drop plone viewport definition -->
         <drop content="/html/head/meta[@name='viewport']" />
 
-        <!-- drop row class -->
 
-        <replace css:theme="#visual-portal-wrapper" css:content="#visual-portal-wrapper" />
+
+        <replace css:theme="#left-column-content" css:content="#portal-column-one" />
+
+        <replace css:theme="#main-content" css:content="#portal-column-content" />
+
+
 
 
 

@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules
+    xmlns="http://namespaces.plone.org/diazo"
+    xmlns:css="http://namespaces.plone.org/diazo/css"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+    <theme href="index.html" />
+
+    <notheme if-path="@@plone_ckfinder" />
+
+
+    <!-- Logo -->
+    <!--<replace css:content=".bs-header img" css:theme="#portal-logo" />-->
+
+    <!-- Header Title -->
+    <after content="/html/head/style | /html/head/script" theme="/html/head/title" />
+
+    <!--<replace css:content="#portal-logo" css:theme="#portal-logo" />-->
+    <replace css:theme="#portal-title-main a" css:content-children="#portal-title-main" />
+    <replace css:theme="#portal-title-second a" css:content-children="#portal-title-second" />
+
+    <!-- Breadcrumb -->
+    <copy css:content=".breadcrumb" css:theme=".breadcrumb" />
+    <drop css:content="#viewlet-above-content" />
+
+    <!-- Content -->
+    <!--<replace css:theme-children=".bs-docs-container" css:content="#portal-columns" />-->
+    <replace css:theme-children=".page-header h1" css:content-children=".documentFirstHeading" />
+
+    <append css:content-children=".documentFirstHeading" css:theme-children=".page-header" />
+
+
+    <replace css:content='#editing-bar' css:theme='#editing-bar' />
+    <replace css:content="#content" css:theme="#content-area" />
+    <drop css:content=".documentFirstHeading" />
+
+    <drop css:content="#viewlet-above-content-title" />
+
+    <!-- Dropping all folder_content images -->
+    <drop css:content="table td img" />
+
+    <!-- Navigation -->
+    <replace css:theme-children=".bs-sidenav" css:content-children='.portletNavigationTree' />
+
+    <!-- Footer -->
+    <replace css:theme-children=".bs-footer .container ul" css:content-children="#portal-siteactions" />
+    <append css:content="#portal-personaltools-wrapper" css:theme=".bs-header .container" />
+
+    <!-- Portlets -->
+    <append css:content="#portal-column-one .managePortletsLink" css:theme=".bs-sidebar" />
+    <append css:content="#portal-column-two .managePortletsLink" css:theme="#portal-column-two" />
+
+    <append css:content='#portletmanager-plone-leftcolumn'  css:theme='.bs-sidebar' />
+    <append css:content='#portletmanager-plone-rightcolumn'  css:theme='#portal-column-two'/>
+
+    <!-- Search -->
+    <replace css:theme="#livesearch" css:content=".form-search" />
+    <drop css:content=".documentActions" />
+
+    <!-- Text Editor -->
+    <drop css:theme=".fieldTextFormat" />
+
+   <!-- Document Actions -->
+    <replace css:theme-children=".documentActions" css:content-children=".documentActions ul" />
+
+    <xsl:template match="//a[contains(text(), 'Drucken')]/">
+        <xsl:attribute name="class"> fa fa-print</xsl:attribute>
+        <xsl:attribute name="title"><xsl:copy-of select="."/></xsl:attribute>
+        <xsl:attribute name="style">text-decoration:none;</xsl:attribute>
+        <xsl:apply-templates />
+    </xsl:template>
+
+    <xsl:template match="//a[contains(text(), 'RSS-Feed')]/">
+        <xsl:attribute name="class"> fa fa-rss</xsl:attribute>
+        <xsl:attribute name="title"><xsl:copy-of select="."/></xsl:attribute>
+        <xsl:attribute name="style">text-decoration:none;</xsl:attribute>
+        <xsl:apply-templates />
+    </xsl:template>
+
+
+    <xsl:template match="//div[@class='managePortletsLink']//a">
+        <xsl:copy>
+            <xsl:attribute name="class">btn btn-default btn-sm pull-right</xsl:attribute>
+            <xsl:attribute name="href">@@manage-portlets</xsl:attribute>
+            <xsl:apply-templates select="node()"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- History -->
+
+    <!-- Link -> eine Ebene höher -->
+    <xsl:template match="//a//@class[contains(.,'link-parent')]">
+        <xsl:attribute name="class">link-parent btn btn-default btn-sm</xsl:attribute>
+    </xsl:template>
+
+    <!-- Discreet -->
+    <xsl:template match="//p//@class[contains(., 'discreet')]">
+        <xsl:attribute name="class">discreet alert alert-info</xsl:attribute>
+        <xsl:attribute name="role">alert</xsl:attribute>
+    </xsl:template>
+
+    <!-- Required Fields -->
+    <xsl:template match="//div[contains(text(), 'Titel erfordert eine Eingabe.')]/">
+        <xsl:attribute name="class">alert alert-danger</xsl:attribute>
+        <xsl:value-of select="." />
+        <xsl:apply-templates />
+    </xsl:template>
+
+
+    <!-- Konfiguration Panel -->
+
+
+    <!-- Action Menu -->
+    <!-- <replace css:content="#image"> -->
+    <xsl:template match="//a[@id[contains(.,'image')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-image"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(., 'file')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-file-text"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(., 'collection')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-newspaper-o"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(.,'link')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/> <i class="fa fa-link"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(., 'news-item')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-comments"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(.,'folder') and not(contains(.,'-selectall')) or contains(.,'folderHeader')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-folder"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(.,'faqfolder')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-folder"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(.,'formfolder')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-folder-open"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(.,'blog-entry')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-comments-o"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(.,'ploneglossary')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-book"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(.,'collective-cover-content')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-cubes"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(., 'contextHeader')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-file-text-o"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(., 'document') and not(contains(.,'documentByLine'))]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-file-o"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(., 'event')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-calendar"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+    <!-- Action Menu Darstellung ICONS -->
+    <xsl:template match="//a[@id[contains(., 'folder_listing') or contains(., 'display-standard_view')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-list"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(., 'summary_view')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-list-ol"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(., 'atct_album_view') or contains(., 'display-thumbnail_view')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-camera-retro"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+    <xsl:template match="//a[@id[contains(.,'plone-contentmenu-display-folder_full_view')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-th-large"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+    <xsl:template match="//a[@id[contains(., 'tabular_view')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-table"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+    <!-- Action Menu CUT/COPY/PASTE/DELETE -->
+    <xsl:template match="//a[@id[contains(., 'plone-contentmenu-actions-cut')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-scissors"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+    <xsl:template match="//a[@id[contains(., 'plone-contentmenu-actions-delete')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-eraser"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+    <xsl:template match="//a[@id[contains(., 'plone-contentmenu-actions-copy')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-copy"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+    <xsl:template match="//a[@id[contains(., 'plone-contentmenu-actions-paste')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-clipboard"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+    <xsl:template match="//a[@id[contains(., 'plone-contentmenu-actions-rename')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-refresh"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(., 'plone-contentmenu-actions-export')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-upload"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    <xsl:template match="//a[@id[contains(., 'plone-contentmenu-actions-import')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-download"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+    <!-- Default Page -->
+    <xsl:template match="//a[@id[contains(., 'folderChangeDefaultPage') or contains(., 'contextSetDefaultPage')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:attribute name="data-toggle">modal</xsl:attribute>
+            <xsl:attribute name="data-target">#pb_2</xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-home"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+    <xsl:template match="//a[@id[contains(., '-settings')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-exclamation-triangle"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+    <!-- Publish states -->
+    <xsl:template match="//a[@id[contains(., '-publish_fhnw')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-university"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+   <xsl:template match="//a[@id[contains(., '-publish_web')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-globe"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+   <xsl:template match="//a[@id[contains(., '-publish_oe')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-users"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+   <xsl:template match="//a[@id[contains(., '-transition-hide')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-user"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+   <xsl:template match="//a[@id[contains(., '-transition-advanced')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-expand"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+   <!-- View all content -->
+   <xsl:template match="//a[@id[contains(., '-all_content')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-folder-open"></i>  <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+
+    <xsl:template match="//a[@id[contains(., 'user-name')]]">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:attribute name="class"><xsl:value-of select="." />btn btn-primary dropdown-toggle</xsl:attribute>
+            <xsl:attribute name="data-toggle">dropdown</xsl:attribute>
+            <xsl:apply-templates select="./@*[contains(' id ', concat(' ', name(), ' '))]"/><i class="fa fa-user"></i>  <xsl:value-of select="." />
+            <span class="caret"></span>
+        </a>
+    </xsl:template>
+
+    <!-- Remove Img Icons -->
+   <xsl:template match="//img[@src[contains(.,'info_icon.png')]]" >
+        <span class="glyphicon glyphicon-warning-sign"></span>
+   </xsl:template>
+
+
+    <!-- Folder Contents -->
+  <xsl:template match="//table[@class[contains(., 'listing')] or contains('sequencewidget','sequencewidget')]">
+  <table>
+        <xsl:copy-of select="attribute::*[not(name()='class')]" />
+        <xsl:attribute name="class"> table table-hover <xsl:value-of select="@class" /></xsl:attribute>
+        <xsl:apply-templates />
+    </table>
+    </xsl:template>
+
+    <xsl:template match="//img[@src[contains(.,'group.png')]]">
+        <i class="fa fa-users"></i>
+        <xsl:apply-templates />
+    </xsl:template>
+
+    <!-- Tabs -->
+    <xsl:template match="//ul//@class[contains(., 'selected')]">
+        <xsl:attribute name="class">
+            <xsl:value-of select="." /> active
+        </xsl:attribute>
+    </xsl:template>
+
+    <xsl:template match="//ul[@class[contains(., 'contentActions')]]">
+        <xsl:attribute name="class">nav nav-tabs</xsl:attribute>
+    </xsl:template>
+
+
+    <xsl:template match="//ul[@class[contains(.,'formTabs')]]">
+            <xsl:attribute name="class">nav nav-tabs</xsl:attribute>
+            <xsl:apply-templates />
+    </xsl:template>
+
+
+    <!-- Form Input Fields -->
+    <xsl:template match="//input[@type[contains(., 'text')]]">
+    <input>
+        <xsl:copy-of select="attribute::*[not(name()='class')]" />
+        <xsl:attribute name="class"><xsl:value-of select="." /> form-control</xsl:attribute>
+    </input>
+    </xsl:template>
+
+
+<!--    <xsl:template match="//input[@id[contains('q','q')]]">
+    <input>
+        <xsl:copy-of select="attribute::*[not(name()='class')]" />
+        <xsl:attribute name="class"><xsl:value-of select="@class" /> form-control</xsl:attribute>
+    </input>
+    </xsl:template>-->
+
+    <xsl:template match="//div//@id[contains(.,'field-inherit')]">
+        <xsl:attribute name="class">checkbox</xsl:attribute>
+    </xsl:template>
+
+    <!-- Form Buttons -->
+    <xsl:template match="//input[@type[contains(., 'submit') or contains(., 'button') or contains(., 'file')]]">
+    <input>
+        <xsl:copy-of select="attribute::*[not(name()='class')]" />
+        <xsl:attribute name="class"><xsl:value-of select="@class" /> btn btn-default
+            <xsl:if test="@name[contains(., 'save') or contains(., 'Save') or contains(., 'RenameAll') or contains(., 'form.button.Search')]">btn-primary</xsl:if>
+            <!--<xsl:if test="@name[contains(., 'delete') or contains(., 'Remove') or contains(.,'folder_delete:method')]">btn-danger</xsl:if>-->
+            <xsl:if test="@name[contains(., 'content_status_history:method') or contains(.,'form.button.Cancel')]">btn-warning</xsl:if>
+            <xsl:if test="@name[contains(., 'save') or contains(., 'Save') or contains(., 'RenameAll') or contains(., 'form.button.Search')]">btn-primary</xsl:if>
+            <xsl:if test="@value[contains(.,'Löschen')]">btn-danger</xsl:if>
+        </xsl:attribute>
+    </input>
+    </xsl:template>
+
+    <!-- Status Button -->
+    <xsl:template match="//button//@class[contains(.,'label-state-published_oe')]">
+        <xsl:attribute name="class"><xsl:value-of select="." /> alert-info</xsl:attribute>
+    </xsl:template>
+    <xsl:template match="//button//@class[contains(.,'label-state-private')]">
+        <xsl:attribute name="class"><xsl:value-of select="." /> alert-danger</xsl:attribute>
+    </xsl:template>
+    <xsl:template match="//button//@class[contains(.,'label-state-published_fhnw')]">
+        <xsl:attribute name="class"><xsl:value-of select="." /> alert-warning</xsl:attribute>
+    </xsl:template>
+    <xsl:template match="//button//@class[contains(.,'label-state-published_web')]">
+        <xsl:attribute name="class"><xsl:value-of select="." /> alert-success</xsl:attribute>
+    </xsl:template>
+
+
+    <!-- Listing Bar -->
+    <xsl:template match="//div[@class='listingBar']//ul">
+    <div>
+        <xsl:copy-of select="attribute::*[not(name()='class')]" />
+        <xsl:attribute name="class"><xsl:value-of select="@class" /> pagination</xsl:attribute>
+        <ul class="pagination">
+            <xsl:attribute name="class"><xsl:value-of select="@class" /> pagination</xsl:attribute>
+            <xsl:if test="span[@class='previous']/a">
+                <li>
+                    <xsl:copy-of select="span[@class='previous']/a" />
+                </li>
+            </xsl:if>
+            <xsl:for-each select="*[not(contains(@class, 'previous')) and not(contains(@class, 'next'))]">
+                <xsl:choose>
+                    <xsl:when test="child::a and not(child::text())">
+                    <li>
+                        <xsl:copy-of select="./a[text()]" />
+                    </li>
+                    </xsl:when>
+                    <xsl:when test="child::a and child::text()">
+                        <xsl:if test="position() = last()">
+                        <li>
+                            <xsl:attribute name="class">disabled</xsl:attribute>
+                            <a>
+                                <xsl:attribute name="href">#</xsl:attribute>
+                                <xsl:copy-of select="text()" />
+                            </a>
+                        </li>
+                        </xsl:if>
+                        <li>
+                            <xsl:copy-of select="./a[text()]" />
+                        </li>
+                       e<xsl:if test="position() = 1">
+                        <li>
+                            <xsl:attribute name="class">disabled</xsl:attribute>
+                            <a>
+                                <xsl:attribute name="href">#</xsl:attribute>
+                                <xsl:copy-of select="text()" />
+                            </a>
+                        </li>
+                        </xsl:if>
+                    </xsl:when>
+                    <xsl:when test="name()='span' and not(child::a)">
+                        <li>
+                            <xsl:attribute name="class">active</xsl:attribute>
+                            <a>
+                                <xsl:attribute name="href">#</xsl:attribute>
+                                <xsl:copy-of select="text()" />
+                            </a>
+                        </li>
+                        </xsl:when>
+                    <xsl:when test="@href">
+                        <li>
+                            <a>
+                                <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+                                <xsl:copy-of select="text()" />
+                            </a>
+                        </li>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <li>
+                            <xsl:attribute name="class">disabled</xsl:attribute>
+                            <a>
+                                <xsl:attribute name="href">#</xsl:attribute>
+                                <xsl:copy-of select="text()" />
+                            </a>
+                        </li>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:for-each>
+            <xsl:if test="span[@class='next']/a">
+                <li>
+                    <xsl:copy-of select="span[@class='next']/a" />
+                </li>
+            </xsl:if>
+        </ul>
+    </div>
+    </xsl:template>
+
+    <!-- Content Search Field -->
+    <xsl:template css:match=".searchField">
+        <xsl:attribute name="class">searchField form-control</xsl:attribute>
+    </xsl:template>
+
+    <!-- Konfig Tabs -->
+
+    <xsl:template match="//div//@style[contains(.,text())]">
+        <xsl:attribute name="style"></xsl:attribute>
+    </xsl:template>
+
+   <xsl:template match="//div//@class[contains(.,'alert-block')]">
+        <xsl:attribute name="class"><xsl:value-of select="." /> alert-danger</xsl:attribute>
+    </xsl:template>
+
+    <!-- Konfiguration Panel Dropdown  -->
+    <xsl:template css:match="ul.configlets">
+        <ul class="list-group">
+            <xsl:for-each select="li">
+                <li class="list-group-item">
+                    <xsl:apply-templates />
+                </li>
+             </xsl:for-each>
+        </ul>
+    </xsl:template>
+
+
+    <xsl:template match="//div//@class[contains(.,'formQuestion')]">
+        <xsl:attribute name="class"></xsl:attribute>
+    </xsl:template>
+
+    <!-- History -->
+    <xsl:template css:match=".documentByLine">
+      <div class="documentByLine alert alert-warning">
+          <xsl:apply-templates />
+      </div>
+    </xsl:template>
+
+    <!-- Checkboxes -->
+    <xsl:template css:match=".widget">
+    <div class="widget checkbox">
+        <xsl:copy-of select="."/>
+    </div>
+    </xsl:template>
+
+    <xsl:template css:match=".optionsToggle">
+        <span class="optionsToggle checkbox">
+           <xsl:apply-templates />
+        </span>
+    </xsl:template>
+
+    <xsl:template css:match="dt .summary img">
+        <i class="fa fa-tasks"></i>
+    </xsl:template>
+
+<!--    <replace if-path="@@manage-portlets">
+      <xsl:template css:match="@livesearch0">
+         <xsl:apply-templates />
+      </xsl:template>
+    </replace>-->
+
+</rules>

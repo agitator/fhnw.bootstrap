@@ -8,7 +8,129 @@
 </head>
 <body>
 
-    <div id="visual-portal-wrapper"></div>
+    <span style="display: none" id="activeTheme">Casablanca Theme</span>
+<a class="sr-only" href="#content">Skip to main content</a>
+
+<!-- Docs master nav -->
+<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a href="./" class="navbar-brand"><img src="./docs-assets/img/fhnw.png" alt="FHWN - Fachhochschule Nordwestschweiz" ></a> </div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation"> </nav>
+  </div>
+</header>
+
+<!-- Docs page layout -->
+<div class="bs-header" id="content">
+  <div class="container"><img src="./docs-assets/img/fhnw-w.png" alt="FHNW">
+    <p id="portal-title-main"><a href="#">[Maintitle h1]</a></p>
+    <p id="portal-title-second"><a href="#">[Subtitle h2]</a></p>
+    <!--  -->
+  </div>
+</div>
+
+<!-- Breadcrumb Navigation -->
+<div class="bs-breadcrumb">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-9">
+        <ol class="breadcrumb">
+          <li><a href="#">Home</a> ?</li>
+          <li><a href="#">Level II</a> ?</li>
+          <li class="active">Level III</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container bs-docs-container">
+  <div class="row">
+    <div id="left-column-content" class="col-md-3 sidenav">
+      <div class="bs-sidebar hidden-print" role="complementary">
+        <ul class="nav bs-sidenav">
+          <li> <a href="#grid">Subnav Level I</a>
+            <ul class="nav">
+              <li><a href="#grid-intro">Subnav Level II</a></li>
+              <li><a href="#grid-media-queries">Subnav Level II</a></li>
+              <li><a href="#grid-options">Subnav Level II</a></li>
+              <li><a href="#grid-example-basic">Subnav Level II</a></li>
+              <li><a href="#grid-example-fluid">Subnav Level II</a></li>
+              <li><a href="#grid-example-mixed">Subnav Level II</a></li>
+              <li><a href="#grid-example-mixed-complete">Subnav Level II</a></li>
+              <li><a href="#grid-responsive-resets">Subnav Level II</a></li>
+              <li><a href="#grid-offsetting">Subnav Level II</a></li>
+              <li><a href="#grid-nesting">Subnav Level II</a></li>
+              <li><a href="#grid-column-ordering">Subnav Level II</a></li>
+              <li><a href="#grid-less">Subnav Level II</a></li>
+            </ul>
+          </li>
+          <li> <a href="#type">Subnav Level I</a>
+            <ul class="nav">
+              <li><a href="#type-headings">Subnav Level II</a></li>
+              <li><a href="#type-body-copy">Subnav Level II</a></li>
+              <li><a href="#type-emphasis">Subnav Level II</a></li>
+              <li><a href="#type-abbreviations">Subnav Level II</a></li>
+              <li><a href="#type-addresses">Subnav Level II</a></li>
+              <li><a href="#type-blockquotes">Subnav Level II</a></li>
+              <li><a href="#type-lists">Subnav Level II</a></li>
+            </ul>
+          </li>
+          <li> <a href="#code">Subnav Level I</a>
+            <ul class="nav">
+              <li><a href="#code-inline">Subnav Level II</a></li>
+              <li><a href="#code-user-input">Subnav Level II</a></li>
+              <li><a href="#code-block">Subnav Level II</a></li>
+            </ul>
+          </li>
+          <li> <a href="#tables">Subnav Level I</a>
+            <ul class="nav">
+              <li><a href="#tables-example">Subnav Level II</a></li>
+              <li><a href="#tables-striped">Subnav Level II</a></li>
+              <li><a href="#tables-bordered">Subnav Level II</a></li>
+              <li><a href="#tables-hover-rows">Subnav Level II</a></li>
+              <li><a href="#tables-condensed">Subnav Level II</a></li>
+              <li><a href="#tables-contextual-classes">Subnav Level II</a></li>
+              <li><a href="#tables-responsive">Subnav Level II</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="main-content" class="col-md-6" role="main">
+
+      <!-- Global Bootstrap settings
+  ================================================== -->
+    <div class="bs-docs-section">
+        <div id="editing-bar">EditingBar</div>
+        <div class="page-header">
+          &nbsp;<ul class="documentActions"></ul>
+          <h1 id="overview">Overview</h1>
+        </div>
+        <div id="content-area">Content Area</div>
+    </div>
+    </div>
+    <div id="portal-column-two" class="col-md-3">
+      <p id="livesearch">&nbsp;</p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer
+    ================================================== -->
+<footer class="bs-footer navbar-fixed-bottom" role="contentinfo">
+  <div class="container">
+    <ul class="list-inline">
+      <li>© <a href="http://www.fhnw.ch"> FHNW 2014</a></li>
+      <li><a href="http://web.fhnw.ch/plattformen/sd/sitemap" accesskey="3" title="Sitemap">Sitemap</a></li>
+      <li><a href="http://www.fhnw.ch/impressum" accesskey="" title="Impressum">Impressum</a></li>
+      <li><a href="http://web.fhnw.ch/plattformen/sd/login_form" accesskey="" title="Login">Login</a></li>
+      <li><a href="http://web.fhnw.ch/plattformen/sd/accessibility-info" accesskey="0" title="Barrierefreiheit">Barrierefreiheit</a></li>
+      <li><a href="http://web.fhnw.ch/plattformen/sd/contact-info" accesskey="9" title="Kontakt" rel="#pb_1" class="link-overlay" style="cursor: pointer;">Kontakt</a></li>
+    </ul>
+  </div>
+</footer>
 
 </body>
 </html>

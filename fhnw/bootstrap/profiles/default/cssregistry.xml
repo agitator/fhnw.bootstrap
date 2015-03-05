@@ -3,11 +3,34 @@
 
 <object name="portal_css">
 
-  <stylesheet
-    insert-before="*"
-    id="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
-    media="screen"
-    rel="stylesheet"
-    rendering="link"/>
+    <stylesheet
+        insert-before="*"
+        id="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
+        media="screen"
+        rel="stylesheet"
+        rendering="link"/>
+
+    <stylesheet
+        insert-before="*"
+        id="//fonts.googleapis.com/css?family=Open+Sans:400,700"
+        rel="stylesheet"/>
+
+    <stylesheet
+        insert-before="*"
+        id="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
+        rel="stylesheet"/>
+
+
+ <stylesheet title=""
+    insert-after="*"
+    id="++theme++fhnw.bootstrap/static/fhnw.css"
+    media="screen" rel="stylesheet" rendering="link"
+    cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression="" />
+
+
+
+    <stylesheet enabled="False" id="columns.css"/>
+
 
 </object>
