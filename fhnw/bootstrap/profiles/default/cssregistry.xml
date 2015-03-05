@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- This file holds the setup configuration for the portal_css tool. -->
+
+<object name="portal_css">
+
+  <stylesheet
+    insert-before="*"
+    id="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
+    media="screen"
+    rel="stylesheet"
+    rendering="link"/>
+
+</object>
